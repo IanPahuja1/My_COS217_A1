@@ -1,0 +1,35 @@
+Outside comment (accept) <-- the start state
+	/: First slash (do nothing)
+	': Character literal (print ')
+	": String literal (print ")
+	else: Outside comment (print char)
+
+Inside comment (reject)
+	*: Second astrick (do nothing)
+	else: Inside Comment (do nothing)
+		
+First slash (accept)
+	*: Inside Comment (print space)
+	': Character literal (print / then print ')
+	": String literal (print / then print ")
+	else: Outside comment (print / then print char)
+
+Second astrick (reject)
+	/: Outside comment (do nothing)
+	else: Inside Comment (do nothing)
+
+Character literal (accept)
+	': Outside comment (print ')
+	\: Escaped character in character literal (print \)
+	else: Character literal (print char)
+
+String literal (accept)
+	": Outside comment (print ")
+	\: Escaped character in string literal (print \)
+	else: String literal (print char)
+
+Escaped character in character literal (accept)
+        all: Character literal (print char)
+
+Escaped character in string literal (accept)
+	all: String literal (print char)
